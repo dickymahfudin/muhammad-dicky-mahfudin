@@ -4,10 +4,10 @@
 
 ```bash
 # Clone this project
-$ git clone https://github.com/dickymahfudin/muhammad-dicky-mahfudin.git
+$ git clone https://github.com/dickymahfudin/muhammad-dicky-mahfudin.git .
 
 # Access
-$ cd muhammad-dicky-mahfudin/backend
+$ cd backend
 
 # Install dependencies
 $ npm install
@@ -49,6 +49,16 @@ npm run dev
 or
 yarn dev
 ```
+
+> Menjalankan Unit Testing (Configurasi database harus sesuai dengan lokal)
+
+```bash
+npm run test
+or
+yarn test
+```
+
+![alt text](https://github.com/dickymahfudin/muhammad-dicky-mahfudin/blob/master/github/unittesting.jpg?raw=true)
 
 ## Frontend
 

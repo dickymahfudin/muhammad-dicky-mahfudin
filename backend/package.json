@@ -11,7 +11,8 @@
     "migrate": "node-pg-migrate -m src/database/migrations --migration-filename-format utc",
     "seed": "node ./src/database/seed/runSeed.js",
     "token": "node ./src/utils/generateToken.js",
-    "migrate-seed": "npm run migrate up && npm run seed"
+    "migrate-seed": "npm run migrate up && npm run seed",
+    "test": "lab "
   },
   "dependencies": {
     "@hapi/boom": "^9.1.4",
@@ -30,6 +31,8 @@
     "yarn": "^1.22.17"
   },
   "devDependencies": {
+    "@hapi/code": "^8.0.7",
+    "@hapi/lab": "^24.5.1",
     "nodemon": "^2.0.15"
   }
 }
