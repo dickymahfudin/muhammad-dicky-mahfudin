@@ -13,6 +13,9 @@ const route = [
         return `${folder}/${filename}`;
       },
     },
+    options: {
+      auth: false,
+    },
   },
 ];
 

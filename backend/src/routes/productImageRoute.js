@@ -1,20 +1,19 @@
 const { productImageService } = require('../app/service');
-const { productImagesSchema } = require('../schema');
 
 const productRoute = [
+  { method: 'DELETE', path: '/product/image/{id}', handler: productImageService.delete },
   {
     method: 'POST',
     path: '/product/{productId}/image',
     options: {
       payload: {
         maxBytes: 1000 * 1000 * 2,
-        output: 'stream',
         parse: true,
-        multipart: true,
-        defaultContentType: 'text/plain',
+        allow: 'multipart/form-data',
+        multipart: { output: 'stream' },
       },
     },
-    handler: productImageService.createUpdate,
+    handler: productImageService.create,
   },
 ];
 

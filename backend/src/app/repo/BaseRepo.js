@@ -17,7 +17,6 @@ class BaseRepo {
   }
 
   async create(data) {
-    data.id = Math.random().toString(10).substring(2, 10).toUpperCase();
     const convert = this._dataToQuery(data);
     const query = `INSERT INTO ${this._tableName} (${convert.column}) VALUES (${convert.iteration}) RETURNING *`;
     const create = await this._db.query(query, convert.value);

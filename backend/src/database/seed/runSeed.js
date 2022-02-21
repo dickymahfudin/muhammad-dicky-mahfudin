@@ -13,7 +13,7 @@ products.forEach(async product => {
     });
     const product_id = createProduct[0].id;
     product.images.forEach(async (image, i) => {
-      await new ProductImageRepo().create({ product_id, name: `image0${i + 1}`, url: image });
+      await new ProductImageRepo().create({ product_id, url: image });
     });
   } catch (err) {
     console.log(err.message);

@@ -10,7 +10,13 @@ const init = async () => {
   const server = Hapi.server({
     port: process.env.APP_PORT || 3000,
     host: 'localhost',
-    routes: { files: { relativeTo: path.join(__dirname, 'public') } },
+    routes: {
+      files: { relativeTo: path.join(__dirname, 'public') },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-with'],
+      },
+    },
   });
 
   await server.register([{ plugin: hapiAuthJwt2 }, { plugin: inert }]);

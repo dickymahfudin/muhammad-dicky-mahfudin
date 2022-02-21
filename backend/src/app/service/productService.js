@@ -1,5 +1,6 @@
-const { ProductRepo, ProductImageRepo } = require('../repo');
 const Boom = require('@hapi/boom');
+const imageToBase64 = require('image-to-base64');
+const { ProductRepo, ProductImageRepo } = require('../repo');
 
 const RepoProduct = new ProductRepo();
 const RepoProductImage = new ProductImageRepo();
@@ -7,14 +8,14 @@ const productService = {
   index: async (request, h) => {
     try {
       const page = +request.query.page || 1;
-      const itemsPerPage = 10;
+      const itemsPerPage = 12;
       const count = await RepoProduct.count();
       const totalPage = Math.ceil(count / itemsPerPage);
-      const list = await RepoProduct.pagination(page);
+      const list = await RepoProduct.pagination(page, itemsPerPage);
       const products = await Promise.all(
         list.map(async product => {
           const images = await RepoProductImage.getByProductId(product.id);
-          return { ...product, images };
+          return { ...product, image: images[0] };
         })
       );
       return h.response({ page, totalPage, products });
@@ -27,7 +28,13 @@ const productService = {
       const { id } = request.params;
       const product = await RepoProduct.getByid(id);
       if (!product.length) return Boom.notFound('Product Not Found');
-      const images = await RepoProductImage.getByProductId(product[0].id);
+      const tempImages = await RepoProductImage.getByProductId(product[0].id);
+      const images = await Promise.all(
+        tempImages.map(async image => {
+          const base64 = await imageToBase64(image.url);
+          return { ...image, data_url: `data:image/png;base64,${base64}` };
+        })
+      );
       return h.response({ ...product[0], images });
     } catch (err) {
       return Boom.badImplementation(err);
@@ -38,7 +45,7 @@ const productService = {
       const { name, sku, price, description } = request.payload;
       const getSku = await RepoProduct.getBySku(sku);
       if (getSku.length) return Boom.conflict('SKU Already Exists');
-      const createProduct = await RepoProduct.create({ name, sku, price, description });
+      const createProduct = await RepoProduct.create({ name, sku, price, description, created_at: new Date() });
       return h.response(createProduct[0]).code(201);
     } catch (err) {
       console.log(err);
