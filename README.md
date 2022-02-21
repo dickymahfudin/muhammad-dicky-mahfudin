@@ -7,10 +7,10 @@
 $ git clone https://github.com/dickymahfudin/muhammad-dicky-mahfudin.git
 
 # Access
-$ cd backend
+$ cd muhammad-dicky-mahfudin/backend
 
 # Install dependencies
-$ npm run install
+$ npm install
 or
 $ yarn install
 
@@ -57,7 +57,7 @@ yarn dev
 $ cd frontend
 
 # Install dependencies
-$ npm run install
+$ npm install --legacy-peer-deps
 or
 $ yarn install
 
